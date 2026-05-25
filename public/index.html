@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Scraper Nativo Investidor10</title>
-  <meta name="description" content="Frontend de testes para o scraper nativo do Investidor10." />
+  <meta name="description" content="Frontend completo para visualizar todos os dados coletados pelo scraper nativo do Investidor10." />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -12,9 +12,10 @@
     <header class="hero">
       <div>
         <p class="eyebrow">Investidor10 Scraper</p>
-        <h1>Frontend de teste</h1>
+        <h1>Visualizador completo</h1>
         <p class="subtitle">
-          Teste ações, FIIs, listagens, busca e raspagem em lote usando os endpoints serverless da Vercel.
+          Teste o scraper e veja todos os dados coletados: resumo, métricas, indicadores normalizados,
+          seções, tabelas, links, JSON-LD, texto bruto e resposta original.
         </p>
       </div>
 
@@ -29,11 +30,11 @@
 
     <main class="grid">
       <section class="panel controls">
-        <div class="tabs" role="tablist">
-          <button class="tab active" data-tab="asset">Ativo</button>
-          <button class="tab" data-tab="search">Busca</button>
-          <button class="tab" data-tab="list">Lista</button>
-          <button class="tab" data-tab="bulk">Bulk</button>
+        <div class="tabs" role="tablist" aria-label="Tipos de teste">
+          <button class="tab active" type="button" data-tab="asset">Ativo</button>
+          <button class="tab" type="button" data-tab="search">Busca</button>
+          <button class="tab" type="button" data-tab="list">Lista</button>
+          <button class="tab" type="button" data-tab="bulk">Bulk</button>
         </div>
 
         <form class="form active" id="assetForm" data-form="asset">
@@ -121,10 +122,11 @@
         <div class="quick-tests">
           <p>Testes rápidos</p>
           <div>
-            <button class="ghost" data-preset="/api/asset?type=fiis&ticker=MXRF11">MXRF11</button>
-            <button class="ghost" data-preset="/api/asset?type=acoes&ticker=PETR4">PETR4</button>
-            <button class="ghost" data-preset="/api/list?type=fiis">Lista FIIs</button>
-            <button class="ghost" data-preset="/api/bulk?type=fiis&limit=5&concurrency=2">Bulk FIIs</button>
+            <button class="ghost" type="button" data-preset="/api/asset?type=fiis&ticker=MXRF11">MXRF11</button>
+            <button class="ghost" type="button" data-preset="/api/asset?type=acoes&ticker=PETR4">PETR4</button>
+            <button class="ghost" type="button" data-preset="/api/list?type=fiis">Lista FIIs</button>
+            <button class="ghost" type="button" data-preset="/api/list?type=acoes">Lista Ações</button>
+            <button class="ghost" type="button" data-preset="/api/bulk?type=fiis&limit=5&concurrency=2">Bulk FIIs</button>
           </div>
         </div>
       </section>
@@ -138,6 +140,7 @@
 
           <div class="actions">
             <button class="ghost" id="copyBtn" type="button">Copiar JSON</button>
+            <button class="ghost" id="downloadBtn" type="button">Baixar JSON</button>
             <button class="ghost danger" id="clearBtn" type="button">Limpar</button>
           </div>
         </div>
@@ -148,9 +151,18 @@
           <span>Status: --</span>
         </div>
 
-        <div class="summary" id="summary"></div>
+        <div class="view-tabs" role="tablist" aria-label="Modo de visualização">
+          <button class="view-tab active" type="button" data-view="visual">Visual completo</button>
+          <button class="view-tab" type="button" data-view="json">JSON bruto</button>
+        </div>
 
-        <pre class="json-box"><code id="output">Clique em algum teste ou envie um formulário.</code></pre>
+        <div id="visualView" class="visual-view">
+          <div class="empty-state">
+            Clique em algum teste ou envie um formulário para montar todas as informações coletadas.
+          </div>
+        </div>
+
+        <pre id="jsonView" class="json-box hidden"><code id="output">Clique em algum teste ou envie um formulário.</code></pre>
       </section>
     </main>
   </div>
