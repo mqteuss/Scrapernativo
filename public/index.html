@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scraper Nativo Investidor10</title>
+  <meta name="description" content="Frontend de testes para o scraper nativo do Investidor10." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Investidor10 Scraper</p>
+        <h1>Frontend de teste</h1>
+        <p class="subtitle">
+          Teste ações, FIIs, listagens, busca e raspagem em lote usando os endpoints serverless da Vercel.
+        </p>
+      </div>
+
+      <div class="status-card">
+        <span class="status-dot" id="statusDot"></span>
+        <div>
+          <strong id="statusText">Verificando API...</strong>
+          <small id="statusDetail">/api/health</small>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel controls">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="asset">Ativo</button>
+          <button class="tab" data-tab="search">Busca</button>
+          <button class="tab" data-tab="list">Lista</button>
+          <button class="tab" data-tab="bulk">Bulk</button>
+        </div>
+
+        <form class="form active" id="assetForm" data-form="asset">
+          <label>
+            Tipo
+            <select name="type">
+              <option value="fiis">FIIs</option>
+              <option value="acoes">Ações</option>
+            </select>
+          </label>
+
+          <label>
+            Ticker
+            <input name="ticker" value="MXRF11" placeholder="MXRF11, PETR4..." autocomplete="off" />
+          </label>
+
+          <label class="check">
+            <input name="fresh" type="checkbox" />
+            Ignorar cache
+          </label>
+
+          <button type="submit">Raspar ativo</button>
+        </form>
+
+        <form class="form" id="searchForm" data-form="search">
+          <label>
+            Buscar ticker
+            <input name="q" value="PETR4" placeholder="Digite um ticker ou nome" autocomplete="off" />
+          </label>
+
+          <label class="check">
+            <input name="fresh" type="checkbox" />
+            Ignorar cache
+          </label>
+
+          <button type="submit">Buscar</button>
+        </form>
+
+        <form class="form" id="listForm" data-form="list">
+          <label>
+            Tipo
+            <select name="type">
+              <option value="fiis">FIIs</option>
+              <option value="acoes">Ações</option>
+            </select>
+          </label>
+
+          <label class="check">
+            <input name="fresh" type="checkbox" />
+            Ignorar cache
+          </label>
+
+          <button type="submit">Listar tickers</button>
+        </form>
+
+        <form class="form" id="bulkForm" data-form="bulk">
+          <label>
+            Tipo
+            <select name="type">
+              <option value="fiis">FIIs</option>
+              <option value="acoes">Ações</option>
+            </select>
+          </label>
+
+          <div class="two-cols">
+            <label>
+              Limite
+              <input name="limit" type="number" value="5" min="1" max="50" />
+            </label>
+
+            <label>
+              Concorrência
+              <input name="concurrency" type="number" value="3" min="1" max="5" />
+            </label>
+          </div>
+
+          <label class="check">
+            <input name="fresh" type="checkbox" />
+            Ignorar cache
+          </label>
+
+          <button type="submit">Raspar em lote</button>
+        </form>
+
+        <div class="quick-tests">
+          <p>Testes rápidos</p>
+          <div>
+            <button class="ghost" data-preset="/api/asset?type=fiis&ticker=MXRF11">MXRF11</button>
+            <button class="ghost" data-preset="/api/asset?type=acoes&ticker=PETR4">PETR4</button>
+            <button class="ghost" data-preset="/api/list?type=fiis">Lista FIIs</button>
+            <button class="ghost" data-preset="/api/bulk?type=fiis&limit=5&concurrency=2">Bulk FIIs</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel result">
+        <div class="result-head">
+          <div>
+            <p class="eyebrow">Resposta</p>
+            <h2 id="requestTitle">Nenhuma requisição ainda</h2>
+          </div>
+
+          <div class="actions">
+            <button class="ghost" id="copyBtn" type="button">Copiar JSON</button>
+            <button class="ghost danger" id="clearBtn" type="button">Limpar</button>
+          </div>
+        </div>
+
+        <div class="meta" id="meta">
+          <span>Endpoint: aguardando...</span>
+          <span>Tempo: --</span>
+          <span>Status: --</span>
+        </div>
+
+        <div class="summary" id="summary"></div>
+
+        <pre class="json-box"><code id="output">Clique em algum teste ou envie um formulário.</code></pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
